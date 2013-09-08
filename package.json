@@ -1,10 +1,10 @@
 {
 	"name":"runrightfast-sandbox",
 	"version":"0.0.1",
-	"description":"RunRightFast sandbox project, which is used for experimentation",
+	"description":"Node based app that provides a logging REST API",
 	"repository":{
 		"type":"git",
-		"url":"https://github.com/runrightfast/runrightfast-sandbox.git"
+		"url":"https://github.com/runrightfast/runrightfast-logging-server.git"
 	},
 	"scripts":{
 		"start":"node server/server.js",
