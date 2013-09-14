@@ -1,7 +1,7 @@
 {
-	"name":"runrightfast-sandbox",
+	"name":"runrightfast-logging-server",
 	"version":"0.0.1",
-	"description":"Node based app that provides a logging REST API",
+	"description":"Logging Server",
 	"repository":{
 		"type":"git",
 		"url":"https://github.com/runrightfast/runrightfast-logging-server.git"
@@ -17,11 +17,11 @@
 	"author":"Alfio Zappala",
 	"license":"Apache v2",
 	"dependencies":{		
-		"hapi":"1.9.6",
+		"hapi":"1.9.7",
 		"lout":"0.5.0",		
+		"handlebars":"1.0.12",
 		"furball":"0.3.3",
-		"hoek":"1.0.0",
-		"uuid":"1.4.1"
+		"runrightfast-logging-service-hapi-plugin":"git://github.com/runrightfast/runrightfast-logging-service-hapi-plugin.git#0.0.2"
 	},
 	"devDependencies":{
 		"grunt":"~0.4.1",

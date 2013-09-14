@@ -20,18 +20,20 @@ module.exports = function(grunt) {
 		pkg : grunt.file.readJSON('package.json'),
 		jslint : {
 			server : {
-				src : [ 'server/routes/*.js', 'server/*.js',
-						'server/test/*.js' ],
+				src : [ 'lib/*.js', 'test/*.js' ],
 				directives : {
 					node : true,
+					passfail : false,
+					nomen : true,
+					plusplus : true,
 					todo : true,
-					white : true,
 					vars : true,
-					predef : ['describe','it']
+					white : true,
+					predef : [ 'describe', 'it' ]
 				},
 				options : {
-					log : 'out/server-lint.log',
-					jslintXml : 'out/server-jslint.xml',
+					log : 'out/lint.log',
+					jslintXml : 'out/jslint.xml',
 					errorsOnly : true,
 					failOnError : false
 				}
@@ -51,7 +53,7 @@ module.exports = function(grunt) {
 				}
 			},
 			options : {
-				files : 'server/test/*.js'
+				files : 'test/*.js'
 			}
 		},
 		clean : [ 'out' ]
