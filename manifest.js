@@ -14,7 +14,7 @@
  * the License.
  */
 'use strict';
-var utils = require('./utils');
+var utils = require('./lib/utils');
 
 module.exports = {
 	pack : {},

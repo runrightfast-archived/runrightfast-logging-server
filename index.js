@@ -19,7 +19,7 @@
 
 	var Hapi = require('hapi');
 
-	var manifest = require('./lib/manifest');
+	var manifest = require('./manifest');
 	var composer = new Hapi.Composer(manifest);
 
 	composer.compose(function(err) {

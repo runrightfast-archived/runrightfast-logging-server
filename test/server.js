@@ -19,7 +19,7 @@
 var expect = require('chai').expect;
 
 var Hapi = require('hapi');
-var manifest = require('../lib/manifest');
+var manifest = require('../manifest');
 
 describe('Logging Server', function() {
 
