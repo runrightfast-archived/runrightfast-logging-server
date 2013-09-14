@@ -14,23 +14,28 @@
  * the License.
  */
 
-(function() {
-	'use strict';
+'use strict';
 
-	var Hapi = require('hapi');
+var expect = require('chai').expect;
 
-	var manifest = require('./lib/manifest');
-	var composer = new Hapi.Composer(manifest);
+var Hapi = require('hapi');
+var manifest = require('../lib/manifest');
 
-	composer.compose(function(err) {
+describe('Logging Server', function() {
 
-		if (err) {
-			console.log('Failed composing');
-		}
+	it('is composed', function(done) {
+		var composer = new Hapi.Composer(manifest);
+
+		composer.compose(function(err) {
+
+			if (err) {
+				console.log('Failed composing');
+				done(err);
+			}
+
+			done();
+		});
 	});
 
-	composer.start(function() {
-
-		console.log('All servers started');
-	});
-}());
+	
+});
