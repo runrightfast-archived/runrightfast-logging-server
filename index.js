@@ -18,19 +18,18 @@
 	'use strict';
 
 	var Hapi = require('hapi');
-
 	var manifest = require('./manifest');
 	var composer = new Hapi.Composer(manifest);
 
 	composer.compose(function(err) {
-
 		if (err) {
 			console.log('Failed composing');
 		}
 	});
 
 	composer.start(function() {
-
 		console.log('All servers started');
 	});
+	
+	module.exports = composer;
 }());

@@ -14,7 +14,7 @@
  * the License.
  */
 'use strict';
-var utils = require('./lib/utils');
+var utils = require('./lib/rrf-utils');
 
 module.exports = {
 	pack : {},

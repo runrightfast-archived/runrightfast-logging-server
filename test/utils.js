@@ -17,13 +17,14 @@
 'use strict';
 
 var expect = require('chai').expect;
-var utils = require('../lib/utils');
+var utils = require('../lib/rrf-utils');
 var process = require('process');
 
 describe('utils', function() {
 
 	describe('#serverPort()', function() {
 		it('returns default port of 8000', function() {
+			delete process.env.RRF_HTTP_PORT;
 			expect(utils.serverPort()).to.equal(8000);
 		});
 
@@ -34,7 +35,7 @@ describe('utils', function() {
 		it('returns process.env.RRF_HTTP_PORT if specified', function() {
 			process.env.RRF_HTTP_PORT = 9080;
 			expect(utils.serverPort(8080)).to.equal(9080);
-			process.env.RRF_HTTP_PORT = undefined;
+			delete process.env.RRF_HTTP_PORT;
 		});
 	});
 

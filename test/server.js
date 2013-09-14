@@ -20,6 +20,31 @@ var expect = require('chai').expect;
 
 var Hapi = require('hapi');
 var manifest = require('../manifest');
+var http = require('http');
+
+var utils = require('../lib/rrf-utils');
+
+var logApiOptions = {
+	hostname : 'localhost',
+	port : utils.serverPort(8000),
+	path : '/log',
+	method : 'POST'
+};
+
+function postEvents(events, callback, errorCallback) {
+	var req = http.request(logApiOptions, callback);
+
+	req.on('error', function(e) {
+		console.log('problem with request: ' + e.message);
+		if (errorCallback) {
+			errorCallback();
+		}
+	});
+
+	// write data to request body
+	req.write(JSON.stringify(events));
+	req.end();
+}
 
 describe('Logging Server', function() {
 
@@ -37,5 +62,55 @@ describe('Logging Server', function() {
 		});
 	});
 
-	
+	describe('testing running HTTP server', function() {
+		var composer = null;
+
+		before(function(done) {
+			composer = require('../index');
+			done();
+		});
+
+		after(function(done) {
+			composer.stop(function() {
+				console.log('All servers stopped');
+			});
+			done();
+		});
+
+		it('/log - POST a single valid event', function(done) {
+			var event = {
+				tags : [ 'info' ],
+				data : 'test : /log - POST a single valid event'
+			};
+
+			postEvents(event, function(response) {
+				expect(response.statusCode).to.equal(202);
+				done();
+			}, done);
+
+		});
+
+		it('/log - POST an array of valid events', function(done) {
+			var events = [ {
+				tags : [ 'info' ],
+				data : 'test : /log - POST a single valid event - 1'
+			}, {
+				tags : [ 'info' ],
+				data : 'test : /log - POST a single valid event - 2'
+			}, {
+				tags : [ 'info' ],
+				data : 'test : /log - POST a single valid event - 3'
+			}, {
+				tags : [ 'info' ],
+				data : 'test : /log - POST a single valid event - 4'
+			} ];
+
+			postEvents(events, function(response) {
+				expect(response.statusCode).to.equal(202);
+				done();
+			}, done);
+
+		});
+	});
+
 });

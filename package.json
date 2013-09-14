@@ -7,10 +7,10 @@
 		"url":"https://github.com/runrightfast/runrightfast-logging-server.git"
 	},
 	"scripts":{
-		"start":"node server/server.js",
+		"start":"node index.js",
 		"blanket":{
 			"pattern":[
-				"server/lib"
+				"lib/rrf-utils.js"
 			]
 		}		
 	},
