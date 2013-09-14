@@ -16,16 +16,26 @@
 
 'use strict';
 
-/**
- * 
- * @returns Number looks up port specified in system environment variable
- *          RRF_HTTP_PORT, but if not specified, then uses the specified value or
- *          8000 if not port is specified
- */
-module.exports.serverPort = function serverPort(defaultPort) {
-	if (process.env.RRF_WEB_PORT) {
-		return parseInt(process.env.RRF_HTTP_PORT, 10);
-	}
+var expect = require('chai').expect;
+var utils = require('../lib/utils');
+var process = require('process');
 
-	return !defaultPort ? defaultPort : 8000;
-};
+describe('utils', function() {
+
+	describe('#serverPort()', function() {
+		it('returns default port of 8000', function() {
+			expect(utils.serverPort()).to.equal(8000);
+		});
+
+		it('returns specified port if not defined in env', function() {
+			expect(utils.serverPort(8080)).to.equal(8080);
+		});
+
+		it('returns process.env.RRF_HTTP_PORT if specified', function() {
+			process.env.RRF_HTTP_PORT = 9080;
+			expect(utils.serverPort(8080)).to.equal(9080);
+			process.env.RRF_HTTP_PORT = undefined;
+		});
+	});
+
+});
