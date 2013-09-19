@@ -1,6 +1,6 @@
 {
 	"name":"runrightfast-logging-server",
-	"version":"0.0.3",
+	"version":"0.0.4",
 	"description":"Logging Server",
 	"repository":{
 		"type":"git",
