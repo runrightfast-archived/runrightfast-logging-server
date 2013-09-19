@@ -46,6 +46,28 @@ function postEvents(events, callback, errorCallback) {
 	req.end();
 }
 
+function startServer(callback) {
+	var Hapi = require('hapi');
+
+	var manifest = require('../manifest');
+	var composer = new Hapi.Composer(manifest);
+
+	composer.compose(function(err) {
+		if (err) {
+			console.error('Failed composing servers : ' + err.message);
+			callback(err);
+		} else {
+			console.log('Hapi is composed.');
+			composer.start(function() {
+				console.log('All servers started');
+				callback();
+			});
+		}
+	});
+
+	return composer;
+}
+
 describe('Logging Server', function() {
 
 	it('is composed', function(done) {
@@ -62,19 +84,20 @@ describe('Logging Server', function() {
 		});
 	});
 
-	describe('testing running HTTP server', function() {
+	describe('testing running HTTP server - via http module', function() {
 		var composer = null;
 
 		before(function(done) {
-			composer = require('../index');
-			done();
+			composer = startServer(done);
 		});
 
 		after(function(done) {
-			composer.stop(function() {
+			composer.stop({
+				timeout : 1 * 1000
+			}, function() {
 				console.log('All servers stopped');
+				done();
 			});
-			done();
 		});
 
 		it('/log - POST a single valid event', function(done) {
@@ -84,8 +107,11 @@ describe('Logging Server', function() {
 			};
 
 			postEvents(event, function(response) {
-				expect(response.statusCode).to.equal(202);
-				done();
+				if (response.statusCode == 202) {
+					done();
+				} else {
+					done(new Error('Expected response.statusCode = 202, but actually was : ' + response.status.code));
+				}
 			}, done);
 
 		});
@@ -106,9 +132,102 @@ describe('Logging Server', function() {
 			} ];
 
 			postEvents(events, function(response) {
-				expect(response.statusCode).to.equal(202);
-				done();
+				if (response.statusCode == 202) {
+					done();
+				} else {
+					done(new Error('Expected response.statusCode = 202, but actually was : ' + response.status.code));
+				}
 			}, done);
+
+		});
+
+	});
+
+	describe('testing running HTTP server - via rest module', function() {
+		var rest = require('rest');
+		var composer = null;
+
+		before(function(done) {
+			composer = startServer(done);
+		});
+
+		after(function(done) {
+			composer.stop({
+				timeout : 1 * 1000
+			}, function() {
+				console.log('All servers stopped');
+				done();
+			});
+		});
+
+		it('/log - POST a single valid event', function(done) {
+			var event = {
+				tags : [ 'info' ],
+				data : 'test : /log - POST a single valid event'
+			};
+
+			var request = {
+				path : 'http://localhost:8000/log',
+				entity : JSON.stringify(event)
+			};
+
+			rest(request).then(function(response) {
+				if (response.status.code == 202) {
+					done();
+				} else {
+					done(new Error('Expected response.status.code = 202, but actually was : ' + response.status.code));
+				}
+			});
+
+		});
+
+		it('/log - POST a single invalid event', function(done) {
+			var event = {
+				data : 'test : /log - POST a single valid event'
+			};
+
+			var request = {
+				path : 'http://localhost:8000/log',
+				entity : JSON.stringify(event)
+			};
+
+			rest(request).then(function(response) {
+				if (response.status.code == 400) {
+					done();
+				} else {
+					done(new Error('Expected response.status.code = 400, but actually was : ' + response.status.code));
+				}
+			});
+
+		});
+
+		it('/log - POST an array of valid events', function(done) {
+			var events = [ {
+				tags : [ 'info' ],
+				data : 'test : /log - POST a single valid event - 1'
+			}, {
+				tags : [ 'info' ],
+				data : 'test : /log - POST a single valid event - 2'
+			}, {
+				tags : [ 'info' ],
+				data : 'test : /log - POST a single valid event - 3'
+			}, {
+				tags : [ 'info' ],
+				data : 'test : /log - POST a single valid event - 4'
+			} ];
+
+			var request = {
+				path : 'http://localhost:8000/log',
+				entity : JSON.stringify(events)
+			};
+
+			rest(request).then(function(response) {
+				if (response.status.code == 202) {
+					done();
+				} else {
+					done(new Error('Expected response.status.code = 202, but actually was : ' + response.status.code));
+				}
+			});
 
 		});
 	});
