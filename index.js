@@ -14,66 +14,27 @@
  * the License.
  */
 
+/**
+ * The following options can be configured via system environment variables:
+ * 
+ * <pre>
+ * RRF_HTTP_PORT - default is 8000
+ * RRF_LOG_LEVEL - default is 'WARN'
+ * </pre>
+ * 
+ */
 (function() {
 	'use strict';
 
-	var domain = require('domain');
-	var serverDomain = domain.create();
-
-	var Hapi = require('hapi');
-
+	var HapiServer = require('runrightfast-hapi-server');
 	var manifest = require('./manifest');
-	var composer = new Hapi.Composer(manifest);
+	var utils = require('./lib/rrf-utils');
 
-	var log = function(msg) {
-		console.log(new Date().toISOString() + ' : ' + msg);
+	var options = {
+		manifest : manifest,
+		logLevel : utils.logLevel('WARN')
 	};
 
-	var logError = function(msg) {
-		console.error(new Date().toISOString() + ' : ' + msg);
-	};
-
-	var shutdown = function(event) {
-		log(event);
-		if (composer) {
-			log('Shutting down ...');
-			composer.stop({
-				timeout : 60 * 1000
-			}, function() {
-				composer = undefined;
-				log('All servers stopped');
-				serverDomain.dispose();
-				process.exit(0);
-			});
-		}
-	};
-
-	process.on('exit', function() {
-		shutdown('exit');
-	});
-
-	process.on('SIGTERM', function() {
-		shutdown('SIGTERM');
-	});
-
-	serverDomain.on('error', function(error) {
-		logError('Unexpected error - process will exit : ' + error);
-		shutdown();
-		process.exit(1);
-	});
-
-	serverDomain.run(function() {
-		composer.compose(function(err) {
-			if (err) {
-				logError('Failed composing servers : ' + err.message);
-				throw err;
-			} else {
-				log('Hapi is composed.');
-				composer.start(function() {
-					log('All servers started : pid = ' + process.pid);
-				});
-			}
-		});
-	});
+	new HapiServer(options);
 
 }());
