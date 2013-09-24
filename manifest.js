@@ -21,12 +21,14 @@ module.exports = {
 	servers : [ {
 		port : utils.serverPort(8000),
 		options : {
-			labels : [ 'web' ]
+			labels : [ 'api' ]
 		}
 	} ],
 	plugins : {
 		'lout' : {},
 		'furball' : {},
-		'runrightfast-logging-service-hapi-plugin' : {}
+		'runrightfast-logging-service-hapi-plugin' : {
+			logRoutePath : '/api/runrightfast-logging-service/log'
+		}
 	}
 };

@@ -27,7 +27,7 @@ var utils = require('../lib/rrf-utils');
 var logApiOptions = {
 	hostname : 'localhost',
 	port : utils.serverPort(8000),
-	path : '/log',
+	path : '/api/runrightfast-logging-service/log',
 	method : 'POST'
 };
 
@@ -100,10 +100,10 @@ describe('Logging Server', function() {
 			});
 		});
 
-		it('/log - POST a single valid event', function(done) {
+		it(' POST a single valid event', function(done) {
 			var event = {
 				tags : [ 'info' ],
-				data : 'test : /log - POST a single valid event'
+				data : 'test : POST a single valid event'
 			};
 
 			postEvents(event, function(response) {
@@ -116,19 +116,19 @@ describe('Logging Server', function() {
 
 		});
 
-		it('/log - POST an array of valid events', function(done) {
+		it('POST an array of valid events', function(done) {
 			var events = [ {
 				tags : [ 'info' ],
-				data : 'test : /log - POST a single valid event - 1'
+				data : 'test : POST a single valid event - 1'
 			}, {
 				tags : [ 'info' ],
-				data : 'test : /log - POST a single valid event - 2'
+				data : 'test : POST a single valid event - 2'
 			}, {
 				tags : [ 'info' ],
-				data : 'test : /log - POST a single valid event - 3'
+				data : 'test : POST a single valid event - 3'
 			}, {
 				tags : [ 'info' ],
-				data : 'test : /log - POST a single valid event - 4'
+				data : 'test : POST a single valid event - 4'
 			} ];
 
 			postEvents(events, function(response) {
@@ -160,14 +160,14 @@ describe('Logging Server', function() {
 			});
 		});
 
-		it('/log - POST a single valid event', function(done) {
+		it('POST a single valid event', function(done) {
 			var event = {
 				tags : [ 'info' ],
-				data : 'test : /log - POST a single valid event'
+				data : 'test : POST a single valid event'
 			};
 
 			var request = {
-				path : 'http://localhost:8000/log',
+				path : 'http://localhost:8000/api/runrightfast-logging-service/log',
 				entity : JSON.stringify(event)
 			};
 
@@ -181,13 +181,13 @@ describe('Logging Server', function() {
 
 		});
 
-		it('/log - POST a single invalid event', function(done) {
+		it('POST a single invalid event', function(done) {
 			var event = {
-				data : 'test : /log - POST a single valid event'
+				data : 'test : POST a single valid event'
 			};
 
 			var request = {
-				path : 'http://localhost:8000/log',
+				path : 'http://localhost:8000/api/runrightfast-logging-service/log',
 				entity : JSON.stringify(event)
 			};
 
@@ -201,23 +201,23 @@ describe('Logging Server', function() {
 
 		});
 
-		it('/log - POST an array of valid events', function(done) {
+		it('POST an array of valid events', function(done) {
 			var events = [ {
 				tags : [ 'info' ],
-				data : 'test : /log - POST a single valid event - 1'
+				data : 'test : POST a single valid event - 1'
 			}, {
 				tags : [ 'info' ],
-				data : 'test : /log - POST a single valid event - 2'
+				data : 'test : POST a single valid event - 2'
 			}, {
 				tags : [ 'info' ],
-				data : 'test : /log - POST a single valid event - 3'
+				data : 'test : POST a single valid event - 3'
 			}, {
 				tags : [ 'info' ],
-				data : 'test : /log - POST a single valid event - 4'
+				data : 'test : POST a single valid event - 4'
 			} ];
 
 			var request = {
-				path : 'http://localhost:8000/log',
+				path : 'http://localhost:8000/api/runrightfast-logging-service/log',
 				entity : JSON.stringify(events)
 			};
 
