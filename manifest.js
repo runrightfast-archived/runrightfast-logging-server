@@ -25,8 +25,13 @@ module.exports = {
 		}
 	} ],
 	plugins : {
-		'lout' : {},
-		'furball' : {},
+		'lout' : {
+			endpoint : '/api/hapi/docs'
+		},
+		'furball' : {
+			version : false,
+			plugins : '/api/hapi/plugins'
+		},
 		'runrightfast-logging-service-hapi-plugin' : {
 			logRoutePath : '/api/runrightfast-logging-service/log'
 		}
