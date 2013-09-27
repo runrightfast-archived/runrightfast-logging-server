@@ -14,12 +14,12 @@
  * the License.
  */
 'use strict';
-var utils = require('./lib/rrf-utils');
+var config = require('runrightfast-commons').config;
 
 module.exports = {
 	pack : {},
 	servers : [ {
-		port : utils.serverPort(8000),
+		port : parseInt(config.param('RRF_PORT', '8000'), 10),
 		options : {
 			labels : [ 'api' ]
 		}

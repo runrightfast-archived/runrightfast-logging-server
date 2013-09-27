@@ -22,11 +22,11 @@ var Hapi = require('hapi');
 var manifest = require('../manifest');
 var http = require('http');
 
-var utils = require('../lib/rrf-utils');
+var config = require('runrightfast-commons').config;
 
 var logApiOptions = {
 	hostname : 'localhost',
-	port : utils.serverPort(8000),
+	port : parseInt(config.param('RRF_PORT', '8000'), 10),
 	path : '/api/runrightfast-logging-service/log',
 	method : 'POST'
 };
@@ -93,7 +93,7 @@ describe('Logging Server', function() {
 
 		after(function(done) {
 			composer.stop({
-				timeout : 1 * 1000
+				timeout : 1000
 			}, function() {
 				console.log('All servers stopped');
 				done();
@@ -107,7 +107,7 @@ describe('Logging Server', function() {
 			};
 
 			postEvents(event, function(response) {
-				if (response.statusCode == 202) {
+				if (response.statusCode === 202) {
 					done();
 				} else {
 					done(new Error('Expected response.statusCode = 202, but actually was : ' + response.status.code));
@@ -132,7 +132,7 @@ describe('Logging Server', function() {
 			} ];
 
 			postEvents(events, function(response) {
-				if (response.statusCode == 202) {
+				if (response.statusCode === 202) {
 					done();
 				} else {
 					done(new Error('Expected response.statusCode = 202, but actually was : ' + response.status.code));
@@ -153,7 +153,7 @@ describe('Logging Server', function() {
 
 		after(function(done) {
 			composer.stop({
-				timeout : 1 * 1000
+				timeout : 1000
 			}, function() {
 				console.log('All servers stopped');
 				done();
@@ -172,7 +172,7 @@ describe('Logging Server', function() {
 			};
 
 			rest(request).then(function(response) {
-				if (response.status.code == 202) {
+				if (response.status.code === 202) {
 					done();
 				} else {
 					done(new Error('Expected response.status.code = 202, but actually was : ' + response.status.code));
@@ -192,7 +192,7 @@ describe('Logging Server', function() {
 			};
 
 			rest(request).then(function(response) {
-				if (response.status.code == 400) {
+				if (response.status.code === 400) {
 					done();
 				} else {
 					done(new Error('Expected response.status.code = 400, but actually was : ' + response.status.code));
@@ -222,7 +222,7 @@ describe('Logging Server', function() {
 			};
 
 			rest(request).then(function(response) {
-				if (response.status.code == 202) {
+				if (response.status.code === 202) {
 					done();
 				} else {
 					done(new Error('Expected response.status.code = 202, but actually was : ' + response.status.code));

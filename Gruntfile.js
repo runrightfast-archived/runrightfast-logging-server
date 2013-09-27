@@ -63,7 +63,7 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-mocha-cov');
 	grunt.loadNpmTasks('grunt-contrib-clean');
 
-	grunt.registerTask('test', [ 'mochacov:coverage' ]);
+	grunt.registerTask('test', [ 'mochacov:test' ]);
 
 	// Default task(s).
 	grunt.registerTask('default', [ 'clean', 'jslint', 'test' ]);

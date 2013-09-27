@@ -15,12 +15,18 @@
  */
 
 /**
- * The following options can be configured via system environment variables:
+ * The following options can be configured via command line args or as system
+ * environment variables:
  * 
  * <pre>
- * RRF_HTTP_PORT - default is 8000
+ * RRF_PORT - default is 8000
  * RRF_LOG_LEVEL - default is 'WARN'
  * </pre>
+ * 
+ * The command line arg syntax is --PARAM=VALUE
+ * 
+ * e.g. node ./index.js --RRF_PORT=8080
+ * 
  * 
  */
 (function() {
@@ -28,11 +34,11 @@
 
 	var HapiServer = require('runrightfast-hapi-server');
 	var manifest = require('./manifest');
-	var utils = require('./lib/rrf-utils');
+	var config = require('runrightfast-commons').config;
 
 	var options = {
 		manifest : manifest,
-		logLevel : utils.logLevel('WARN')
+		logLevel : config.param('RRF_LOG_LEVEL', 'WARN')
 	};
 
 	new HapiServer(options);
