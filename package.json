@@ -1,6 +1,6 @@
 {
 	"name":"runrightfast-logging-server",
-	"version":"0.0.19",
+	"version":"0.0.20",
 	"description":"Logging Server",
 	"repository":{
 		"type":"git",
@@ -16,15 +16,16 @@
 	},
 	"author":"Alfio Zappala",
 	"license":"Apache v2",
-	"dependencies":{		
-		"hapi":"1.13.x",
+	"dependencies":{
 		"lout":"0.5.x",		
 		"handlebars":"1.0.x",
 		"furball":"0.3.x",
-		"runrightfast-logging-service-hapi-plugin":"git://github.com/runrightfast/runrightfast-logging-service-hapi-plugin.git#0.0.18",
-		"runrightfast-hapi-server":"git://github.com/runrightfast/runrightfast-hapi-server#0.0.11",
-		"runrightfast-commons":"git://github.com/runrightfast/runrightfast-commons#0.0.11",
-		"lodash":"2.2.x"
+		"runrightfast-logging-service-hapi-plugin":"git://github.com/runrightfast/runrightfast-logging-service-hapi-plugin.git#0.0.19",
+		"runrightfast-hapi-server":"git://github.com/runrightfast/runrightfast-hapi-server#0.0.14",
+		"runrightfast-couchbase":"git://github.com/runrightfast/runrightfast-couchbase#0.0.4",
+		"runrightfast-couchbase-logger":"git://github.com/runrightfast/runrightfast-couchbase-logger#0.0.12",
+		"lodash":"2.2.x",
+		"config":"0.4.x"
 	},
 	"devDependencies":{
 		"grunt":"~0.4.1",
@@ -36,6 +37,7 @@
 		"grunt-mocha-cov":"~0.0.7",
 		"grunt-contrib-clean":"~0.5.0",
 		"process":"~0.5.1",
-		"rest":"~0.9.4"
+		"rest":"~0.9.4",
+		"hapi":"1.13.x"
 	}
 }

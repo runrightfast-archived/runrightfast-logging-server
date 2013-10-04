@@ -14,26 +14,11 @@
  * the License.
  */
 'use strict';
-var config = require('runrightfast-commons').config;
 
 module.exports = {
-	pack : {},
-	servers : [ {
-		port : parseInt(config.param('RRF_PORT', '8000'), 10),
-		options : {
-			labels : [ 'api' ]
-		}
-	} ],
-	plugins : {
-		'lout' : {
-			endpoint : '/api/hapi/docs'
-		},
-		'furball' : {
-			version : false,
-			plugins : '/api/hapi/plugins'
-		},
-		'runrightfast-logging-service-hapi-plugin' : {
-			logRoutePath : '/api/runrightfast-logging-service/log'
-		}
+	hapiServer : {
+		logLevel : 'WARN',
+		stopTimeout : 5000,
+		port : 8000
 	}
 };

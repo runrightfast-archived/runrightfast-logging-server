@@ -19,14 +19,13 @@
 var expect = require('chai').expect;
 
 var Hapi = require('hapi');
-var manifest = require('../manifest');
+var serverConfig = require('../config');
 var http = require('http');
-
-var config = require('runrightfast-commons').config;
+var config = require('config');
 
 var logApiOptions = {
 	hostname : 'localhost',
-	port : parseInt(config.param('RRF_PORT', '8000'), 10),
+	port : config.hapiServer.port,
 	path : '/api/runrightfast-logging-service/log',
 	method : 'POST'
 };
@@ -49,8 +48,7 @@ function postEvents(events, callback, errorCallback) {
 function startServer(callback) {
 	var Hapi = require('hapi');
 
-	var manifest = require('../manifest');
-	var composer = new Hapi.Composer(manifest);
+	var composer = new Hapi.Composer(serverConfig.manifest);
 
 	composer.compose(function(err) {
 		if (err) {
@@ -71,7 +69,7 @@ function startServer(callback) {
 describe('Logging Server', function() {
 
 	it('is composed', function(done) {
-		var composer = new Hapi.Composer(manifest);
+		var composer = new Hapi.Composer(serverConfig.manifest);
 
 		composer.compose(function(err) {
 
