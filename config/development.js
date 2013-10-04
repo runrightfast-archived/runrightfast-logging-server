@@ -15,42 +15,49 @@
  */
 'use strict';
 
-module.exports = {
+(function() {
+	var defaultConfig = require('./default');
 
-	couchbaseConnectionManager : {
-		couchbase : {
-			"host" : [ "localhost:8091" ],
-			buckets : [ {
-				bucket : "log"
-			}, {
-				bucket : 'default',
-				aliases : [ 'hawk', 'default' ]
+	module.exports = {
 
-			} ]
-		},
-		logLevel : 'INFO',
-		connectionListener : function() {
-			console.log('couchbaseConnectionManager.connectionListener : CONNECTED TO COUCHBASE');
-		},
-		connectionErrorListener : function(error) {
-			console.error('couchbaseConnectionManager.connectionErrorListener : ' + error);
-		}
-	},
-	hapiServer : {
-		auth : {
-			hawk : {
-				couchbaseBucket : 'hawk',
-				logLevel : 'INFO'
+		couchbaseConnectionManager : {
+			couchbase : {
+				"host" : [ "localhost:8091" ],
+				buckets : [ {
+					bucket : "log"
+				}, {
+					bucket : 'default',
+					aliases : [ 'hawk', 'default' ]
+
+				} ]
+			},
+			logLevel : 'INFO',
+			connectionListener : function() {
+				console.log('couchbaseConnectionManager.connectionListener : CONNECTED TO COUCHBASE');
+			},
+			connectionErrorListener : function(error) {
+				console.error('couchbaseConnectionManager.connectionErrorListener : ' + error);
 			}
 		},
-		plugins : {
-			"runrightfast-logging-service-hapi-plugin" : {
-				couchbaseLogger : {
-					bucket : 'log'
+		hapiServer : {
+			auth : {
+				hawk : {
+					couchbaseBucket : 'hawk',
+					logLevel : 'INFO'
+				}
+			},
+			plugins : {
+				"runrightfast-logging-service-hapi-plugin" : {
+					couchbaseLogger : {
+						bucket : 'log'
+					},
+					logLevel : 'INFO'
 				},
-				logLevel : 'INFO'
-			}
-		},
-		logLevel : 'INFO'
-	}
-};
+				"runrightfast-process-monitor-hapi-plugin" : {
+					logDir : defaultConfig.hapiServer.logDir
+				}
+			},
+			logLevel : 'INFO'
+		}
+	};
+}());

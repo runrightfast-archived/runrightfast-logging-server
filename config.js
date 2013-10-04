@@ -45,6 +45,7 @@ var manifest = {
 			version : false,
 			plugins : '/api/hapi/plugins'
 		},
+		'runrightfast-process-monitor-hapi-plugin' : config.hapiServer.plugins['runrightfast-process-monitor-hapi-plugin'],
 		'runrightfast-logging-service-hapi-plugin' : {
 			logRoutePath : '/api/runrightfast-logging-service/log',
 			loggingService : couchbaseLogger.toLoggingService()

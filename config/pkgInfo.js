@@ -13,17 +13,8 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+
 'use strict';
 
-var path = require('path');
-var pkginfo = require('./pkgInfo');
-var logDir = path.join(__dirname, '..', 'logs', pkginfo.name + '-' + pkginfo.version);
-
-module.exports = {
-	hapiServer : {
-		logLevel : 'WARN',
-		stopTimeout : 5000,
-		port : 8000,
-		logDir : logDir
-	}
-};
+// pkginfo exports the config
+require('pkginfo')(module, 'name','version');
