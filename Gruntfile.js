@@ -20,7 +20,7 @@ module.exports = function(grunt) {
 		pkg : grunt.file.readJSON('package.json'),
 		jslint : {
 			server : {
-				src : [ 'lib/*.js', 'test/*.js' ],
+				src : [ 'lib/*.js', 'test/*.js', 'config.js', 'index.js' ],
 				directives : {
 					node : true,
 					passfail : false,

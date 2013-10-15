@@ -16,17 +16,19 @@
 'use strict';
 
 var config = require('config');
-var CouchbaseLogger = require('runrightfast-couchbase-logger');
 
 var cbConnManager = require('runrightfast-couchbase').couchbaseConnectionManager;
 cbConnManager.registerConnection(config.couchbaseConnectionManager);
 
-var loggingServicePluginConfig = config.hapiServer.plugins['runrightfast-logging-service-hapi-plugin'];
+var createLoggingService = function createLoggingService() {
+	var CouchbaseLogger = require('runrightfast-couchbase-logger');
+	var loggingServicePluginConfig = config.hapiServer.plugins['runrightfast-logging-service-hapi-plugin'];
+	return new CouchbaseLogger({
+		couchbaseConn : cbConnManager.getBucketConnection(loggingServicePluginConfig.couchbaseLogger.bucket),
+		logLevel : (loggingServicePluginConfig.logLevel || 'WARN')
+	}).toLoggingService();
+};
 
-var couchbaseLogger = new CouchbaseLogger({
-	couchbaseConn : cbConnManager.getBucketConnection(loggingServicePluginConfig.couchbaseLogger.bucket),
-	logLevel : (loggingServicePluginConfig.logLevel || 'WARN')
-});
 
 // Hapi Composer manifest
 var manifest = {
@@ -48,7 +50,7 @@ var manifest = {
 		'runrightfast-process-monitor-hapi-plugin' : config.hapiServer.plugins['runrightfast-process-monitor-hapi-plugin'],
 		'runrightfast-logging-service-hapi-plugin' : {
 			logRoutePath : '/api/runrightfast-logging-service/log',
-			loggingService : couchbaseLogger.toLoggingService()
+			loggingService : createLoggingService()
 		}
 	}
 };
