@@ -1,6 +1,6 @@
 {
 	"name":"runrightfast-logging-server",
-	"version":"0.0.23",
+	"version":"0.0.24",
 	"description":"Logging Server",
 	"repository":{
 		"type":"git",
@@ -21,10 +21,10 @@
 		"handlebars":"1.0.x",
 		"furball":"0.3.x",
 		"good":"0.12.x",
-		"runrightfast-logging-service-hapi-plugin":"git://github.com/runrightfast/runrightfast-logging-service-hapi-plugin.git#0.0.19",
-		"runrightfast-process-monitor-hapi-plugin":"git://github.com/runrightfast/runrightfast-process-monitor-hapi-plugin#0.0.3",
+		"runrightfast-logging-service-hapi-plugin":"git://github.com/runrightfast/runrightfast-logging-service-hapi-plugin.git#0.0.20",
+		"runrightfast-process-monitor-hapi-plugin":"git://github.com/runrightfast/runrightfast-process-monitor-hapi-plugin#0.0.4",
 		"runrightfast-hapi-server":"git://github.com/runrightfast/runrightfast-hapi-server#0.0.17",
-		"runrightfast-couchbase":"git://github.com/runrightfast/runrightfast-couchbase#0.0.4",
+		"runrightfast-couchbase":"git://github.com/runrightfast/runrightfast-couchbase#0.0.8",
 		"runrightfast-couchbase-logger":"git://github.com/runrightfast/runrightfast-couchbase-logger#0.0.12",
 		"lodash":"2.2.x",
 		"config":"0.4.x",
