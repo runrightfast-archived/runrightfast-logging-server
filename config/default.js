@@ -25,5 +25,10 @@ module.exports = {
 		stopTimeout : 5000,
 		port : 8000,
 		logDir : logDir
+	},
+	elastic : {
+		port : 9200,
+		index : 'hawk',
+		type : 'credential'
 	}
 };

@@ -20,10 +20,7 @@
 
 	module.exports = {
 		elastic : {
-			host : 'localhost',
-			port : 9200,
-			index : 'log',
-			type : 'event'
+			host : 'localhost'
 		},
 		hapiServer : {
 			auth : {
