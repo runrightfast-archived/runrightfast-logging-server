@@ -17,14 +17,21 @@
 
 var config = require('config');
 
-var cbConnManager = require('runrightfast-couchbase').couchbaseConnectionManager;
-cbConnManager.registerConnection(config.couchbaseConnectionManager);
-
 var createLoggingService = function createLoggingService() {
-	var CouchbaseLogger = require('runrightfast-couchbase-logger');
+	var ElasticSearchClient = require('runrightfast-elasticsearch').ElasticSearchClient;
+	var ejs = new ElasticSearchClient({
+		host : config.elastic.host,
+		port : config.elastic.port
+	}).ejs;
+
+	var ElasticLogger = require('runrightfast-elastic-logger');
 	var loggingServicePluginConfig = config.hapiServer.plugins['runrightfast-logging-service-hapi-plugin'];
-	return new CouchbaseLogger({
-		couchbaseConn : cbConnManager.getBucketConnection(loggingServicePluginConfig.couchbaseLogger.bucket),
+	return new ElasticLogger({
+		elastic : {
+			ejs : ejs,
+			index : config.elastic.index,
+			type : config.elastic.type
+		},
 		logLevel : (loggingServicePluginConfig.logLevel || 'WARN')
 	}).toLoggingService();
 };
@@ -66,6 +73,5 @@ module.exports = {
 	},
 	stopCallback : function() {
 		// perform any resource cleanup work here
-		cbConnManager.stop();
 	}
 };
