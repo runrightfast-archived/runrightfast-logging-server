@@ -28,7 +28,7 @@ module.exports = {
 	},
 	elastic : {
 		port : 9200,
-		index : 'hawk',
-		type : 'credential'
+		index : 'log',
+		type : 'event'
 	}
 };
